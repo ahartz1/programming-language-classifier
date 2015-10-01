@@ -1,0 +1,6 @@
+.direnv
+.envrc
+.cache
+.DS_Store
+.ipynb_checkpoints/
+test/
