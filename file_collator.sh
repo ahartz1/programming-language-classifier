@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Start by finding all files with the desired extensions
+# HOW TO USE THIS SCRIP: Run from the parent directory that has your data
+
+
+# Start by finding all files with the desired extensions, then copy to data/
 find . \
       \(   -name '*.c' -or -name '*.gcc'                        `# C` \
        -or -name '*.csharp'                                    `# C#` \
