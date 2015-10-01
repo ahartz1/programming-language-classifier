@@ -11,7 +11,7 @@ find . \
        -or -name '*.clojure'                                   `# Clojure` \
        -or -name '*.ghc'                                       `# Haskell GHC` \
        -or -name '*.java'                                      `# Java` \
-       -or -name '*.js'                                        `# JavaScript` \
+       -or -name '*.js' -or -name '*.javascript'               `# JavaScript` \
        -or -name '*.ocaml'                                     `# OCaml` \
        -or -name '*.perl'                                      `# Perl` \
        -or -name '*.hack' -or -name '*.php'                    `# PHP` \
