@@ -2,5 +2,4 @@ ipython[notebook]
 matplotlib
 pandas
 scikit-learn
-scipy
-seaborn
+textblob
