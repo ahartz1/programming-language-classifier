@@ -125,6 +125,18 @@ def num_bar_hash(text):
         return 0
 
 
+# Specific to ?
+def num_start_and_end_parenthesis(text):
+    result = re.findall(r'\(.*\)$', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+
+
+
 
 
 
