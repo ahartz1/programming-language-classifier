@@ -98,7 +98,7 @@ def percent_none(text):
 # Scheme
 def percent_start_double_semicolons(text):
     total_length = len(text)
-    result = re.findall(r'^;;', text)
+    result = re.findall(r'(^;;) | (\n;;)', text)
     if result:
         return len(result) / total_length
     else:
@@ -107,7 +107,7 @@ def percent_start_double_semicolons(text):
 
 def percent_start_hashes(text):
     total_length = len(text)
-    result = re.findall(r'^#', text)
+    result = re.findall(r'(^#) | (\n#)', text)
     if result:
         return len(result) / total_length
     else:
@@ -117,17 +117,17 @@ def percent_start_hashes(text):
 # Specific to Clojure?
 def percent_bar_hash(text):
     total_length = len(text)
-    result = re.findall(r'(^\|\#) | (\#\|$)', text)
+    result = re.findall(r'(\n\|\#) | (\#\|\n)', text)
     if result:
         return len(result) / total_length
     else:
         return 0
 
 
-# Specific to Scheme TODO: Make percent of total LINES, not words
+# Specific to Scheme
 def percent_start_and_end_parenthesis(text):
     total_length = re.findall(r'\n', text)
-    result = re.findall(r'\(.*\)$', text)
+    result = re.findall(r'\s*\(.*\)\s*\n', text)
     if result:
         return len(result) / len(total_length)
     else:
@@ -173,7 +173,7 @@ def percent_int(text):
 
 # Specific to Ruby
 def presence_module_line(text):
-    result = re.findall(r'module ([A-Z][a-z]*)+', text)
+    result = re.findall(r'(^|\n)\s*module ([A-Z][a-z]*)+', text)
     if result:
         return 1
     else:
@@ -181,7 +181,7 @@ def presence_module_line(text):
 
 
 def presence_extend_line(text):
-    result = re.findall(r'extend ([A-Z][a-z]*)+::([A-Z][a-z]*)+', text)
+    result = re.findall(r'(^|\n)\s*extend ([A-Z][a-z]*)+::([A-Z][a-z]*)+', text)
     if result:
         return 1
     else:
@@ -189,7 +189,7 @@ def presence_extend_line(text):
 
 
 def presence_require_line(text):
-    result = re.findall(r'^\s*require .+', text)
+    result = re.findall(r'(^|\n)\s*require .+', text)
     if result:
         return 1
     else:
@@ -197,15 +197,18 @@ def presence_require_line(text):
 
 
 def presence_end(text):
-    result = re.findall(r'^\s*end\s*$', text)
+    result = re.findall(r'(^|\n)\s*end\s*($|\n)', text)
     if result:
         return 1
     else:
         return 0
 
 
-
-
+def presence_def_no_colon(text):
+    result = re.findall(r'((^|\n)\s*def){1} ((^|\n)[^:]*($|\n))', text)
+    if result:
+        return 1
+    return 0
 
 
 
