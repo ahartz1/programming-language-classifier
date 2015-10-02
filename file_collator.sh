@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# HOW TO USE THIS SCRIP: Run from the parent directory that has your data
-
+# HOW TO USE THIS SCRIP: Run from the parent directory that has your new data
+# Data will be stored at ~/TIY/programming-language-classifier/data by default
+# but could be changed to a different path.
 
 # Start by finding all files with the desired extensions, then copy to data/
 find . \
