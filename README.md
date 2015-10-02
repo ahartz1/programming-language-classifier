@@ -93,6 +93,8 @@ You may want to add some command-line flags to your program. You could allow peo
 
 * You will need to have **python&nbsp;3** installed on your machine or have access to a python&nbsp;3 interpreter. See [python's site](https://www.python.org/) for details.
 
+* For textblob to work properly, you will need to download its associated data files. To do this you will need to run the following command at the command line: ***`python -m textblob.download_corpora`**
+
 * To run this program, save `mystery_word.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 mystery_word.py`
 
 * This program uses the os.terminal_info function to retrieve the size of your terminal window to appropriately scale the output. If this environment variable is not accessible on your system, the output size defaults to 80 columns x 24 rows. -->
