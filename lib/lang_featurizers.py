@@ -56,88 +56,152 @@ class FunctionFeaturizer(TransformerMixin):
         return np.array(feature_vectors)
 
 
-def percentage_of_punctuation(text):
-    total_length = len(text)
-    text = re.sub(r'[\w\s]', '', text)
-    punct_length = len(text)
-
-    return punct_length / total_length
-
-
 # Differentiating types of null values
 
-def num_nil(text):
+def percent_nil(text):
+    total_length = len(text)
     result = re.findall(r'\W+nil\W+', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
-def num_nil_caps(text):
+def percent_nil_caps(text):
+    total_length = len(text)
     result = re.findall(r'\W+NIL\W+', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
-def num_null(text):
+def percent_null(text):
+    total_length = len(text)
     result = re.findall(r'\W+null\W+', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
-def num_none(text):
+def percent_none(text):
+    total_length = len(text)
     result = re.findall(r'\W+None\W+', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
 # Differentiating types of code comments
-
-def num_start_double_semicolons(text):
+# Scheme
+def percent_start_double_semicolons(text):
+    total_length = len(text)
     result = re.findall(r'^;;', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
-def num_start_hashes(text):
+def percent_start_hashes(text):
+    total_length = len(text)
     result = re.findall(r'^#', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
 # Specific to Clojure?
-def num_bar_hash(text):
+def percent_bar_hash(text):
+    total_length = len(text)
     result = re.findall(r'(^\|\#) | (\#\|$)', text)
     if result:
-        return len(result)
+        return len(result) / total_length
     else:
         return 0
 
 
-# Specific to ?
-def num_start_and_end_parenthesis(text):
+# Specific to Scheme TODO: Make percent of total LINES, not words
+def percent_start_and_end_parenthesis(text):
+    total_length = re.findall(r'\n', text)
     result = re.findall(r'\(.*\)$', text)
     if result:
-        return len(result)
+        return len(result) / len(total_length)
     else:
         return 0
 
 
+# Specific to C#
+def percent_void(text):
+    total_length = len(text)
+    result = re.findall(r'\s+void\s+', text)
+    if result:
+        return len(result) / total_length
+    else:
+        return 0
 
 
+def percent_public(text):
+    total_length = len(text)
+    result = re.findall(r'\s+public\s+', text)
+    if result:
+        return len(result) / total_length
+    else:
+        return 0
 
 
+def percent_bool(text):
+    total_length = len(text)
+    result = re.findall(r'\s+bool\s+', text)
+    if result:
+        return len(result) / total_length
+    else:
+        return 0
+
+
+def percent_int(text):
+    total_length = len(text)
+    result = re.findall(r'\s+int\s+', text)
+    if result:
+        return len(result) / total_length
+    else:
+        return 0
+
+
+# Specific to Ruby
+def presence_module_line(text):
+    result = re.findall(r'module ([A-Z][a-z]*)+', text)
+    if result:
+        return 1
+    else:
+        return 0
+
+
+def presence_extend_line(text):
+    result = re.findall(r'extend ([A-Z][a-z]*)+::([A-Z][a-z]*)+', text)
+    if result:
+        return 1
+    else:
+        return 0
+
+
+def presence_require_line(text):
+    result = re.findall(r'^\s*require .+', text)
+    if result:
+        return 1
+    else:
+        return 0
+
+
+def presence_end(text):
+    result = re.findall(r'^\s*end\s*$', text)
+    if result:
+        return 1
+    else:
+        return 0
 
 
 
