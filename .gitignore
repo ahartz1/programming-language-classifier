@@ -5,3 +5,4 @@
 .ipynb_checkpoints/
 test/
 data/
+lib/__pycache__/
