@@ -64,6 +64,8 @@ def percentage_of_punctuation(text):
     return punct_length / total_length
 
 
+# Differentiating types of null values
+
 def num_nil(text):
     result = re.findall(r'\W+nil\W+', text)
     if result:
@@ -72,10 +74,64 @@ def num_nil(text):
         return 0
 
 
-def longest_run_of_capital_letters(text):
-    '''Find the longest run of capital letters and return their length'''
-    text = re.sub(r'\W', '', text)
-    result = re.findall(r'[A-Z]+', text)
+def num_nil_caps(text):
+    result = re.findall(r'\W+NIL\W+', text)
     if result:
-        return len(sorted(result, key=len, reverse=True)[0])
-    return 0
+        return len(result)
+    else:
+        return 0
+
+
+def num_null(text):
+    result = re.findall(r'\W+null\W+', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+def num_none(text):
+    result = re.findall(r'\W+None\W+', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+# Differentiating types of code comments
+
+def num_start_double_semicolons(text):
+    result = re.findall(r'^;;', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+def num_start_hashes(text):
+    result = re.findall(r'^#', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+# Specific to Clojure?
+def num_bar_hash(text):
+    result = re.findall(r'(^\|\#) | (\#\|$)', text)
+    if result:
+        return len(result)
+    else:
+        return 0
+
+
+
+
+
+
+
+
+
+
+
+#
