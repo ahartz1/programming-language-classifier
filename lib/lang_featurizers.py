@@ -102,7 +102,6 @@ def presence_start_hashes(text):
     return 0
 
 
-
 def presence_bar_hash(text):
     result = re.findall(r'(\n\|\#) | (\#\|\n)', text)
     if result:
@@ -139,6 +138,7 @@ def presence_bool(text):
     if result:
         return 1
     return 0
+
 
 # NOT USED DUE TO LOWERED SCORES!
 def presence_int(text):
@@ -201,6 +201,20 @@ def presence_at(text):
 
 def presence_double_at(text):
     result = re.findall(r'@@[\w]+', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_puts(text):
+    result = re.findall(r'\sputs\s', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_dot_times(text):
+    result = re.findall(r'\.times\s', text)
     if result:
         return 1
     return 0
