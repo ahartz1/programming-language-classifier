@@ -1,5 +1,4 @@
 ipython[notebook]
-matplotlib
 pandas
 scikit-learn
 textblob
