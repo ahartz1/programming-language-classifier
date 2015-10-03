@@ -1,5 +1,5 @@
 import glob
-
+import pandas as pd
 
 def read_polyglot(extension_list):
     X = []
@@ -43,3 +43,28 @@ def match_extensions(df):
     df[0] = df[0].str.replace(r'^racket$', 'Scheme')
     df[0] = df[0].str.replace(r'^scheme$', 'Scheme')
     return df
+
+
+def read_tests():
+    X = []
+    y = None
+    files = glob.glob('test/*')
+    for file in files:
+        with open(file) as f:
+            X.append(f.read())
+
+    with open('test.csv') as f:
+        y = f.read()
+
+    inter = y.split('\n')
+
+    y_out = []
+    for pair in inter:
+        y_out.append(pair.split(','))
+
+    y_out = list(pd.DataFrame(y_out).pop(1))[:-1]
+
+    y_df = match_extensions(pd.DataFrame(y_out))
+    y_out = list(y_df[0])
+
+    return X, y_out
