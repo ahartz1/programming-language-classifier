@@ -48,9 +48,8 @@ def match_extensions(df):
 def read_tests():
     X = []
     y = None
-    files = glob.glob('test/*')
-    for file in files:
-        with open(file) as f:
+    for n in range(1, 33):
+        with open('test/{}'.format(n)) as f:
             X.append(f.read())
 
     with open('test.csv') as f:
