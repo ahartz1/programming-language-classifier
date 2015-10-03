@@ -91,13 +91,18 @@ You may want to add some command-line flags to your program. You could allow peo
 
 <!-- #### System Requirements
 
-* You will need to have **python&nbsp;3** installed on your machine or have access to a python&nbsp;3 interpreter. See [python's site](https://www.python.org/) for details.
+* You will need to have **Python&nbsp;3** installed on your machine or have access to a Python&nbsp;3 interpreter. See [python's site](https://www.python.org/) for details.
 
-* For textblob to work properly, you will need to download its associated data files. To do this you will need to run the following command at the command line: ***`python -m textblob.download_corpora`**
+* Clone this repo onto your machine.
 
-* To run this program, save `mystery_word.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 mystery_word.py`
+* You will need to make sure that you have a Python&nbsp;3 virtual environment running in the folder that you intend to work from. [See this site for details if you're not familiar.](http://docs.python-guide.org/en/latest/dev/virtualenvs/) **Complete this step before attempting the below.**
 
-* This program uses the os.terminal_info function to retrieve the size of your terminal window to appropriately scale the output. If this environment variable is not accessible on your system, the output size defaults to 80 columns x 24 rows. -->
+* In your command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate into the newly created repo. By default, this will be called `programming-language-classifier`. Install the requirements file by runnning **`pip install -r requirements.txt`**. Note that **`lxml`** compiles to the version of Python in your environment after downloading (Python 3)—this process can take awhile, so please be patient.
+
+* For textblob to work properly, you will need to download its associated data files. To do this you will need to run the following command at the command line: **`python -m textblob.download_corpora`** This process can take awhile, so please be patient.
+
+* To run this program, save `guess_lang.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 guess_lang.py` -->
+
 
 ## Additional Resources
 
