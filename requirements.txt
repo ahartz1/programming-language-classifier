@@ -1,5 +1,6 @@
+beautifulsoup4
+glob
 ipython[notebook]
 pandas
 scikit-learn
 textblob
-glob
