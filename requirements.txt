@@ -3,4 +3,5 @@ ipython[notebook]
 lxml
 pandas
 scikit-learn
+scipy
 textblob
