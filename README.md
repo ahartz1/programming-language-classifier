@@ -101,6 +101,16 @@ You may want to add some command-line flags to your program. You could allow peo
 
 * For textblob to work properly, you will need to download its associated data files. To do this you will need to run the following command at the command line: **`python -m textblob.download_corpora`** This process can take awhile, so please be patient.
 
+* For nltk to work properly, you will need to download its associated data files. To do this you will need to run the following command at the command line:
+
+```
+$ python3
+>>> import nltk
+>>> nltk.download()
+```
+
+This will open up a new window on which you will need to select to download all. This process can take awhile, so please be patient. When it is done and you have closed the download window the command line will show `True`. Enter `exit()` on the Python command line to return to the command prompt.
+
 * To run this program, save `guess_lang.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 guess_lang.py` -->
 
 
