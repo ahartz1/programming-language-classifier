@@ -195,57 +195,57 @@ def presence_require_line(text):
 
 
 def presence_end(text):
-    result = re.findall(r'(\bend\b)', text)
+    result = re.findall(r'(\n\s*\bend\b)', text)
     if result:
         return 1
     return 0
 
 
 def presence_multiple_end(text):
-    result = re.findall(r'(\n\s*end\s*){2,}', text)
+    result = re.findall(r'(\n\s*\bend\b\s*){2,}', text)
     if result:
         return 1
     return 0
 
 
 def presence_def_no_colon(text):
-    result = re.findall(r'((?:^|\n)\s*def[^:]*(?:$|\n)){1}', text)
+    result = re.findall(r'((?:^|\n)\s*def [^:]*(?:$|\n)){1}', text)
     if result:
         return 1
     return 0
 
 
 def presence_at(text):
-    result = re.findall(r'@[\w]+', text)
+    result = re.findall(r'[^\w]@[\w]+', text)
     if result:
         return 1
     return 0
 
 
 def presence_double_at(text):
-    result = re.findall(r'@@[\w]+', text)
+    result = re.findall(r'[^\w]@@[\w]+', text)
     if result:
         return 1
     return 0
 
 
 def presence_puts(text):
-    result = re.findall(r'\sputs\s', text)
+    result = re.findall(r'\bputs\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_dot_times(text):
-    result = re.findall(r'\.times\s', text)
+    result = re.findall(r'[^\s\n]\.times\b', text)
     if result:
         return 1
     return 0
 
 
 # Specific to Clojure
-def presence_defn(text):
-    result = re.findall(r'(?:^|\n)\s*\(\s*defn', text)
+def presence_paren_defn(text):
+    result = re.findall(r'(?:^|\n)\s*\(defn ', text)
     if result:
         return 1
     return 0
@@ -256,6 +256,20 @@ def percent_consecutive_closing_paren(text):
     result = re.findall(r'\){2,}(?:$|\n)', text)
     if result:
         return len(result) / len(total_length)
+    return 0
+
+
+def presence_taskloop(text):
+    result = re.findall(r'(?:^|\n)\s*\(taskLoop\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_runtask(text):
+    result = re.findall(r'(?:^|\n)\s*\(runTask\b', text)
+    if result:
+        return 1
     return 0
 
 

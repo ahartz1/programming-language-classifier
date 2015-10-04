@@ -127,6 +127,130 @@ def test_presence_int():
     assert presence_int('if ret == int') == 1
 
 
+def test_presence_module_line():
+    assert presence_module_line('') == 0
+    assert presence_module_line('Abimodule') == 0
+    assert presence_module_line('moduleitary?!') == 0
+    assert presence_module_line('\n    module Pork\n') == 1
+    assert presence_module_line('module Pork') == 1
+
+
+def test_presence_extend_line():
+    assert presence_extend_line('') == 0
+    assert presence_extend_line('Abiextend') == 0
+    assert presence_extend_line('extenditary?!') == 0
+    assert presence_extend_line('\n    extend Pork::Pie\n') == 1
+    assert presence_extend_line('extend Pork::Pie') == 1
+
+
+def test_presence_require_line():
+    assert presence_require_line('') == 0
+    assert presence_require_line('Abirequire') == 0
+    assert presence_require_line('requireitary?!') == 0
+    assert presence_require_line('\n    require pork\n') == 1
+    assert presence_require_line('require pork') == 1
+
+
+def test_presence_end():
+    assert presence_end('') == 0
+    assert presence_end('Abiend') == 0
+    assert presence_end('enditary?!') == 0
+    assert presence_end('before the end') == 0
+    assert presence_end('\n  end') == 1
+    assert presence_end('\nend\n') == 1
+
+
+def test_presence_multiple_end():
+    assert presence_multiple_end('') == 0
+    assert presence_multiple_end('Abiend') == 0
+    assert presence_multiple_end('enditary?!') == 0
+    assert presence_multiple_end('before the end') == 0
+    assert presence_multiple_end('\nend') == 0
+    assert presence_multiple_end('\n  end\nend\n') == 1
+    assert presence_multiple_end('\nend\nend') == 1
+
+
+def test_presence_def_no_colon():
+    assert presence_def_no_colon('') == 0
+    assert presence_def_no_colon('Abidef') == 0
+    assert presence_def_no_colon('defitary?!') == 0
+    assert presence_def_no_colon('before the def') == 0
+    assert presence_def_no_colon('\ndef no_colon:') == 0
+    assert presence_def_no_colon('\n  def i_work\n') == 1
+    assert presence_def_no_colon('\ndef i_work') == 1
+
+
+def test_presence_at():
+    assert presence_at('') == 0
+    assert presence_at('Abi@tus') == 0
+    assert presence_at('@@') == 0
+    assert presence_at('\n  @end') == 1
+    assert presence_at('\n@end\n') == 1
+
+
+def test_presence_double_at():
+    assert presence_double_at('') == 0
+    assert presence_double_at('Abi@@tus') == 0
+    assert presence_double_at('@') == 0
+    assert presence_double_at('\n  @@end') == 1
+    assert presence_double_at('\n@@end\n') == 1
+
+
+def test_presence_puts():
+    assert presence_puts('') == 0
+    assert presence_puts('Abiputs') == 0
+    assert presence_puts('putsitary?!') == 0
+    assert presence_puts('before the puts') == 1
+    assert presence_puts('\n  puts "open"') == 1
+    assert presence_puts('\nputs tippy\n') == 1
+
+
+def test_presence_dot_times():
+    assert presence_dot_times('') == 0
+    assert presence_dot_times('Abitimes') == 0
+    assert presence_dot_times('.times with nothing before') == 0
+    assert presence_dot_times('\n  end.times') == 1
+    assert presence_dot_times('\n1..100.times\n') == 1
+
+
+def test_presence_paren_defn():
+    assert presence_paren_defn('') == 0
+    assert presence_paren_defn('Abidefn') == 0
+    assert presence_paren_defn('defnitary?!') == 0
+    assert presence_paren_defn('before the (defn') == 0
+    assert presence_paren_defn('\ndefn no paren') == 0
+    assert presence_paren_defn('\n  (defn no_colon\n') == 1
+    assert presence_paren_defn('\n(defn i_work') == 1
+
+
+def test_presence_taskloop():
+    assert presence_taskloop('') == 0
+    assert presence_taskloop('AbitaskLoop') == 0
+    assert presence_taskloop('taskLoopnitary?!') == 0
+    assert presence_taskloop('comment (taskLoop') == 0
+    assert presence_taskloop('\ntaskLoop no paren') == 0
+    assert presence_taskloop('\n  (taskLoop no_colon\n') == 1
+    assert presence_taskloop('\n(taskLoop i_work') == 1
+
+
+def test_presence_runtask():
+    assert presence_runtask('') == 0
+    assert presence_runtask('AbirunTask') == 0
+    assert presence_runtask('runTasknitary?!') == 0
+    assert presence_runtask('comment (runTask') == 0
+    assert presence_runtask('\nrunTask no paren') == 0
+    assert presence_runtask('\n  (runTask no_colon\n') == 1
+    assert presence_runtask('\n(runTask i_work') == 1
+
+
+
+
+
+
+
+
+
+
 
 
 
