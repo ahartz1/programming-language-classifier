@@ -57,6 +57,17 @@ def test_presence_bar_hash():
     assert presence_bar_hash('\n|#if ret == null\n#|') == 1
 
 
+def test_presence_paren_define():
+    assert presence_paren_define('') == 0
+    assert presence_paren_define('Abi(define') == 0
+    assert presence_paren_define('(defineitary?!') == 0
+    assert presence_paren_define('\n\t(define | ret == 0)') == 1  # TODO: 0
+    assert presence_paren_define('\n\t(define | (ret) == 0)') == 1  # TODO: 0
+    assert presence_paren_define('\n\t(define | ret == 0') == 1
+    assert presence_paren_define('\n(define-lib') == 1
+    assert presence_paren_define('\n(define-lib (part)') == 1
+
+
 def test_percent_start_and_end_parenthesis():
     assert percent_start_and_end_parenthesis('') == 0
     assert percent_start_and_end_parenthesis('(Abinull') == 0
@@ -108,7 +119,12 @@ def test_presence_bool():
     assert presence_bool('if ret == bool') == 1
 
 
-
+def test_presence_int():
+    assert presence_int('') == 0
+    assert presence_int('Abiint') == 0
+    assert presence_int('intitary?!') == 0
+    assert presence_int('ret == int | ret == 0') == 1
+    assert presence_int('if ret == int') == 1
 
 
 

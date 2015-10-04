@@ -111,6 +111,13 @@ def presence_bar_hash(text):
 
 
 # Specific to Scheme
+def presence_paren_define(text):
+    result = re.findall(r'(?:^|\n)\s*\(define\b', text)
+    if result:
+        return 1
+    return 0
+
+
 def percent_start_and_end_parenthesis(text):
     total_length = re.findall(r'($|\n)', text)
     result = re.findall(r'((?:^|\n)\(.*\)(?:$|\n))', text)
@@ -120,13 +127,13 @@ def percent_start_and_end_parenthesis(text):
 
 
 def longest_run_of_parenthesis(text):
-    result = re.findall(r'(\){2,})(?:$|\n)', text)
+    result = re.findall(r'\)+\]?\)+(?:$|\n)', text)
     if result:
         return len(sorted(result, key=len, reverse=True)[0])
     return 0
 
 
-# Specific to JavaScript
+# Specific to JavaScript? TODO: Refine
 def longest_run_of_curly_braces(text):
     result = re.findall(r'(\}{2,})(?:$|\n)', text)
     if result:
@@ -158,7 +165,7 @@ def presence_bool(text):
 
 # NOT USED DUE TO LOWERED SCORES!
 def presence_int(text):
-    result = re.findall(r'\s+int\s+', text)
+    result = re.findall(r'\bint\b', text)
     if result:
         return 1
     return 0
