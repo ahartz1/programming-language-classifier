@@ -276,8 +276,68 @@ def test_presence_dot_join():
     assert presence_dot_join('Abiprint(join())') == 0
     assert presence_dot_join('.join value') == 0
     assert presence_dot_join('join(value)') == 0
-    assert presence_dot_join('\nprint(''.join(value))') == 1
-    assert presence_dot_join('\n  print(''.join(value))\n') == 1
+    assert presence_dot_join("\nprint(''.join(value))") == 1
+    assert presence_dot_join('\n  print("".join(value))\n') == 1
+
+
+def test_presence_dot_format():
+    assert presence_dot_format('') == 0
+    assert presence_dot_format('Abiprint(format())') == 0
+    assert presence_dot_format('.format value') == 0
+    assert presence_dot_format('format(value)') == 0
+    assert presence_dot_format("\nprint(''.format(value))") == 1
+    assert presence_dot_format('\n  print("".format(value))\n') == 1
+
+
+def test_presence_dot_values():
+    assert presence_dot_values('') == 0
+    assert presence_dot_values('Abiprint(values)') == 0
+    assert presence_dot_values('print values()') == 0
+    assert presence_dot_values('\npork.values()') == 1
+    assert presence_dot_values('\n  pork.values()\n') == 1
+
+
+def test_presence_dunder_name():
+    assert presence_dunder_name('') == 0
+    assert presence_dunder_name('\n__name__') == 0
+    assert presence_dunder_name("\nif __name__ == ") == 0
+    assert presence_dunder_name("\nif __name__ == '__main__':\n") == 1
+
+
+def test_presence_dunder_init():
+    assert presence_dunder_init('') == 0
+    assert presence_dunder_init('\n__init__') == 0
+    assert presence_dunder_init("\nif __init__ == ") == 0
+    assert presence_dunder_init("\ndef __init__(self):\n") == 1
+
+
+def test_presence_def_colon():
+    assert presence_def_colon('') == 0
+    assert presence_def_colon('\n__init__') == 0
+    assert presence_def_colon("\ndef __init__ == ") == 0
+    assert presence_def_colon("\ndef __init__(self):\n") == 1
+    assert presence_def_colon("\n    def func:\n") == 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

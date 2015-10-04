@@ -297,14 +297,14 @@ def presence_print_paren(text):
 
 
 def presence_dot_join(text):
-    result = re.findall(r'\.join\(', text)
+    result = re.findall(r'([\'\"\w]\.join\()', text)
     if result:
         return 1
     return 0
 
 
 def presence_dot_format(text):
-    result = re.findall(r'(\'|")\.format\(', text)
+    result = re.findall(r'([\'\"\w]\.format\()', text)
     if result:
         return 1
     return 0
@@ -318,7 +318,7 @@ def presence_dot_values(text):
 
 
 def presence_dunder_name(text):
-    result = re.findall(r'\nif __name__ == \'__main__\':\n', text)
+    result = re.findall(r'(\nif __name__ == \'__main__\':\n)', text)
     if result:
         return 1
     return 0
@@ -332,10 +332,29 @@ def presence_dunder_init(text):
 
 
 def presence_def_colon(text):
-    result = re.findall(r'^|\ndef .*:\n', text)
+    result = re.findall(r'(?:^|\n)\s*def .*:\n', text)
     if result:
         return 1
     return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
