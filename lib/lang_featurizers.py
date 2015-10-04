@@ -59,51 +59,52 @@ class FunctionFeaturizer(TransformerMixin):
 # Differentiating types of null values
 # Ruby
 def presence_nil(text):
-    result = re.findall(r'\W+nil\W+', text)
+    result = re.findall(r'\bnil\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_nil_caps(text):
-    result = re.findall(r'\W+NIL\W+', text)
+    result = re.findall(r'\bNIL\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_null(text):
-    result = re.findall(r'\W+null\W+', text)
+    result = re.findall(r'\bnull\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_none(text):
-    result = re.findall(r'\W+None\W+', text)
+    result = re.findall(r'\bNone\b', text)
     if result:
         return 1
     return 0
 
 
 # Differentiating types of code comments
+# NOT USED DUE TO LOWERED SCORES!
 # Scheme
 def presence_start_double_semicolons(text):
-    result = re.findall(r'(^;;) | (\n;;)', text)
+    result = re.findall(r'((?:^|\n)+;;)', text)
     if result:
         return 1
     return 0
 
 
 def presence_start_hashes(text):
-    result = re.findall(r'(^#) | (\n#)', text)
+    result = re.findall(r'((?:^|\n)#)', text)
     if result:
         return 1
     return 0
 
 
 def presence_bar_hash(text):
-    result = re.findall(r'(\n\|\#) | (\#\|\n)', text)
+    result = re.findall(r'((^|\n)\|\#).*(\n\#\|)', text)
     if result:
         return 1
     return 0
@@ -112,34 +113,44 @@ def presence_bar_hash(text):
 # Specific to Scheme
 def percent_start_and_end_parenthesis(text):
     total_length = re.findall(r'($|\n)', text)
-    result = re.findall(r'((?:^|\n)\(.*\))', text)
+    result = re.findall(r'((?:^|\n)\(.*\)(?:$|\n))', text)
     if result:
         return len(result) / len(total_length)
     return 0
 
 
 def longest_run_of_parenthesis(text):
-    result = re.findall(r'(\)+\n)', text)
-    return len(sorted(result, key=len, reverse=True))
+    result = re.findall(r'(\){2,})(?:$|\n)', text)
+    if result:
+        return len(sorted(result, key=len, reverse=True)[0])
+    return 0
+
+
+# Specific to JavaScript
+def longest_run_of_curly_braces(text):
+    result = re.findall(r'(\}{2,})(?:$|\n)', text)
+    if result:
+        return len(sorted(result, key=len, reverse=True)[0])
+    return 0
 
 
 # Specific to C#
 def presence_void(text):
-    result = re.findall(r'\s+void\s+', text)
+    result = re.findall(r'\bvoid\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_public(text):
-    result = re.findall(r'\s+public\s+', text)
+    result = re.findall(r'\bpublic\b', text)
     if result:
         return 1
     return 0
 
 
 def presence_bool(text):
-    result = re.findall(r'\s+bool\s+', text)
+    result = re.findall(r'\bbool\b', text)
     if result:
         return 1
     return 0
