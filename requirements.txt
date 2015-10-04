@@ -1,7 +1,9 @@
 beautifulsoup4
 ipython[notebook]
 lxml
+nose
 pandas
+pyparsing
 scikit-learn
 scipy
 textblob
