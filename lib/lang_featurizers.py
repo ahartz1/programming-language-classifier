@@ -289,7 +289,7 @@ def presence_import_line(text):
     return 0
 
 
-def presence_print(text):
+def presence_print_paren(text):
     result = re.findall(r'\n\s*print\(', text)
     if result:
         return 1

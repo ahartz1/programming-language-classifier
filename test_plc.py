@@ -243,7 +243,41 @@ def test_presence_runtask():
     assert presence_runtask('\n(runTask i_work') == 1
 
 
+def test_presence_from_import_line():
+    assert presence_from_import_line('') == 0
+    assert presence_from_import_line('from') == 0
+    assert presence_from_import_line('import') == 0
+    assert presence_from_import_line('from task import\n') == 0
+    assert presence_from_import_line('\nfrom task import DoTask') == 1
+    assert presence_from_import_line('\n  from task import do_task\n') == 1
+    assert presence_from_import_line('\nfrom task_in import do_task') == 1
 
+
+def test_presence_import_line():
+    assert presence_import_line('') == 0
+    assert presence_import_line('from') == 0
+    assert presence_import_line('\nimport') == 0
+    assert presence_import_line('from task import\n') == 0
+    assert presence_import_line('\nimport DoTask') == 0
+    assert presence_import_line('\n  import do_task\n') == 1
+    assert presence_import_line('\nimport do_task') == 1
+
+
+def test_presence_print_paren():
+    assert presence_print_paren('') == 0
+    assert presence_print_paren('Abiprint(value)') == 0
+    assert presence_print_paren('print value') == 0
+    assert presence_print_paren('\nprint(value)') == 1
+    assert presence_print_paren('\n  print(value)\n') == 1
+
+
+def test_presence_dot_join():
+    assert presence_dot_join('') == 0
+    assert presence_dot_join('Abiprint(join())') == 0
+    assert presence_dot_join('.join value') == 0
+    assert presence_dot_join('join(value)') == 0
+    assert presence_dot_join('\nprint(''.join(value))') == 1
+    assert presence_dot_join('\n  print(''.join(value))\n') == 1
 
 
 
