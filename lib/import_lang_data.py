@@ -1,14 +1,15 @@
 import glob
 import pandas as pd
 
+
 def read_polyglot(extension_list):
     X = []
     y = []
     for extension in extension_list:
         files = glob.glob('data/*.{}'.format(extension))
-        for file in files:
+        for file_ in files:
             y.append(extension)
-            with open(file, encoding='windows-1252') as f:
+            with open(file_, encoding='windows-1252') as f:
                 X.append(f.read())
     return X, y
 
