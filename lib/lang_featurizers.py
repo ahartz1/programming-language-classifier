@@ -112,10 +112,15 @@ def presence_bar_hash(text):
 # Specific to Scheme
 def percent_start_and_end_parenthesis(text):
     total_length = re.findall(r'($|\n)', text)
-    result = re.findall(r'\s*\(.*\)\s*\n', text)
+    result = re.findall(r'((?:^|\n)\(.*\))', text)
     if result:
         return len(result) / len(total_length)
     return 0
+
+
+def longest_run_of_parenthesis(text):
+    result = re.findall(r'(\)+\n)', text)
+    return len(sorted(result, key=len, reverse=True))
 
 
 # Specific to C#
@@ -172,14 +177,14 @@ def presence_require_line(text):
 
 
 def presence_end(text):
-    result = re.findall(r'(?:^|\n)\s*end\s*(?:$|\n)', text)
+    result = re.findall(r'(\bend\b)', text)
     if result:
         return 1
     return 0
 
 
 def presence_multiple_end(text):
-    result = re.findall(r'(\n\s*end\s*(?:$|\n)){2,}', text)
+    result = re.findall(r'(\n\s*end\s*){2,}', text)
     if result:
         return 1
     return 0
@@ -236,7 +241,7 @@ def percent_consecutive_closing_paren(text):
     return 0
 
 
-# Specific to Python
+# Specific to Python 3
 def presence_from_import_line(text):
     result = re.findall(r'(?:^|\n)\s*from\s+[a-z_\.]+\s+import\s+[\w\.*]+',
                         text)
@@ -299,6 +304,10 @@ def presence_def_colon(text):
     if result:
         return 1
     return 0
+
+
+
+
 
 
 
