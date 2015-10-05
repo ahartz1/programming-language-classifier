@@ -6,6 +6,7 @@ from textblob import TextBlob
 
 
 class BagOfWordsFeaturizer(TransformerMixin):
+
     def __init__(self, num_words=None):
         self.num_words = num_words
 
@@ -39,6 +40,7 @@ class BagOfWordsFeaturizer(TransformerMixin):
 
 
 class FunctionFeaturizer(TransformerMixin):
+
     def __init__(self, *featurizers):
         self.featurizers = featurizers
 
@@ -87,7 +89,7 @@ def presence_none(text):
 
 
 # Differentiating types of code comments
-# NOT USED DUE TO LOWERED SCORES!
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 # Scheme
 def presence_start_double_semicolons(text):
     result = re.findall(r'((?:^|\n)+;;)', text)
@@ -96,6 +98,7 @@ def presence_start_double_semicolons(text):
     return 0
 
 
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 def presence_start_hashes(text):
     result = re.findall(r'((?:^|\n)#)', text)
     if result:
@@ -103,6 +106,7 @@ def presence_start_hashes(text):
     return 0
 
 
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 def presence_bar_hash(text):
     result = re.findall(r'((^|\n)\|\#).*(\n\#\|)', text)
     if result:
@@ -186,7 +190,22 @@ def presence_for_js(text):
     return 0
 
 
-# NOT USED DUE TO LOWERED SCORES!
+def presence_plus_equals(text):
+    result = re.findall(r'\s+\+=\s+', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_js_case_open_square(text):
+    result = re.findall(r'((?:^|\n)\s*(?:[a-z]+){1}'
+                        r'(?:[A-Z][a-z]*)+\s*\[.*\])', text)
+    if result:
+        return 1
+    return 0
+
+
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 def final_semicolons_per_line(text):
     total_length = re.findall(r'($|\n)', text)
     result = re.findall(r'(;(?:$|\n))', text)
@@ -217,7 +236,28 @@ def presence_bool(text):
     return 0
 
 
-# NOT USED DUE TO LOWERED SCORES!
+def presence_struct(text):
+    result = re.findall(r'\bstruct\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_new(text):
+    result = re.findall(r'\bnew\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_this_dot(text):
+    result = re.findall(r'\bthis\.', text)
+    if result:
+        return 1
+    return 0
+
+
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 def presence_int(text):
     result = re.findall(r'\bint\b', text)
     if result:
@@ -248,6 +288,7 @@ def presence_require_line(text):
     return 0
 
 
+# NOTE: NOT USED DUE TO LOWERED SCORES!
 def presence_end(text):
     result = re.findall(r'(\n\s*\bend\b)', text)
     if result:
@@ -256,9 +297,9 @@ def presence_end(text):
 
 
 def presence_multiple_end(text):
-    result = re.findall(r'(\n\s*\bend\b\s*){2,}', text)
-    if result:
-        return 1
+    result = re.findall(r'(\n\s*\bend\b)', text)
+    if len(result) > 1:
+        return len(result)
     return 0
 
 
@@ -285,6 +326,13 @@ def presence_double_at(text):
 
 def presence_puts(text):
     result = re.findall(r'\bputs\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_elif(text):
+    result = re.findall(r'\belif\b', text)
     if result:
         return 1
     return 0
@@ -399,32 +447,73 @@ def presence_def_colon(text):
     return 0
 
 
+# Specific to OCaml
+def presence_let(text):
+    result = re.findall(r'\n\s*let\s+', text)
+    if result:
+        return 1
+    return 0
 
 
+# NOTE: NOT USED DUE TO LOWERED SCORES!
+def presence_snake_case(text):
+    result = re.findall(r'(\s*(?:[a-z]+)(?:_[a-z]+)+\b)', text)
+    if result:
+        return 1
+    return 0
 
 
+def presence_naked_colon(text):
+    result = re.findall(r'\s+:\s+', text)
+    if result:
+        return 1
+    return 0
 
 
+def presence_naked_lt_minus(text):
+    result = re.findall(r'\s+<-\s+', text)
+    if result:
+        return 1
+    return 0
 
 
+# Specific to PHP
+def percent_dollar_lower(text):
+    total_length = re.findall(r'($|\n)', text)
+    result = re.findall(r'\s(\$[a-z]+)\b', text)
+    if result:
+        return len(result) * 100 / len(total_length)
+    return 0
 
 
+def presence_minus_gt(text):
+    result = re.findall(r'\w->[ \w]', text)
+    if result:
+        return 1
+    return 0
 
 
+def presence_function_php(text):
+    result = re.findall(r'((?:^|\n)\s*function '
+                        r'(?:[A-Z][a-z]*)*\s*\(\s*.*\)\s*\{)', text)
+    if result:
+        return 1
+    return 0
 
 
+# Specific to TCL
+def presence_elseif(text):
+    result = re.findall(r'\belseif\b', text)
+    if result:
+        return 1
+    return 0
 
 
-
-
-
-
-
-
-
-
-
-
+def presence_proc(text):
+    result = re.findall(r'(?:^|\m)\s*(proc\b)', text)
+    if result:
+        return 10
+    return 0
 
 
 #

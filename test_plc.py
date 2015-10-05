@@ -148,6 +148,22 @@ def test_presence_for_js():
     assert presence_for_js('\n  for (s < 1) {\n') == 1
 
 
+def test_presence_plus_equals():
+    assert presence_plus_equals('') == 0
+    assert presence_plus_equals('A+v=ar') == 0
+    assert presence_plus_equals('vari+=tary?!') == 0
+    assert presence_plus_equals('ret += var') == 1
+    assert presence_plus_equals('\nret += var\n') == 1
+
+
+def test_presence_js_case_open_square():
+    assert presence_js_case_open_square('') == 0
+    assert presence_js_case_open_square('\nAvar[a]\n') == 0
+    assert presence_js_case_open_square('vari[tary?!') == 0
+    assert presence_js_case_open_square('funName[i]') == 1
+    assert presence_js_case_open_square('\nretVar[p*2]\n') == 1
+
+
 def test_final_semicolons_per_line():
     assert final_semicolons_per_line('none') == 0
     assert final_semicolons_per_line(';none') == 0
@@ -179,6 +195,30 @@ def test_presence_bool():
     assert presence_bool('boolitary?!') == 0
     assert presence_bool('ret == bool | ret == 0') == 1
     assert presence_bool('if ret == bool') == 1
+
+
+def test_presence_struct():
+    assert presence_struct('') == 0
+    assert presence_struct('Abistruct') == 0
+    assert presence_struct('structitary?!') == 0
+    assert presence_struct('ret == struct | ret == 0') == 1
+    assert presence_struct('if ret == struct') == 1
+
+
+def test_presence_new():
+    assert presence_new('') == 0
+    assert presence_new('Abinew') == 0
+    assert presence_new('newitary?!') == 0
+    assert presence_new('ret == new | ret == 0') == 1
+    assert presence_new('if ret == new') == 1
+
+
+def test_presence_this_dot():
+    assert presence_this_dot('') == 0
+    assert presence_this_dot('Abithis') == 0
+    assert presence_this_dot('beforethis.hey') == 0
+    assert presence_this_dot('ret == this.new | ret == 0') == 1
+    assert presence_this_dot('\nthis.under') == 1
 
 
 def test_presence_int():
@@ -228,8 +268,8 @@ def test_presence_multiple_end():
     assert presence_multiple_end('enditary?!') == 0
     assert presence_multiple_end('before the end') == 0
     assert presence_multiple_end('\nend') == 0
-    assert presence_multiple_end('\n  end\nend\n') == 1
-    assert presence_multiple_end('\nend\nend') == 1
+    assert presence_multiple_end('\n  end\nend\n') == 2
+    assert presence_multiple_end('\nend\nend\nend') == 3
 
 
 def test_presence_def_no_colon():
@@ -265,6 +305,15 @@ def test_presence_puts():
     assert presence_puts('before the puts') == 1
     assert presence_puts('\n  puts "open"') == 1
     assert presence_puts('\nputs tippy\n') == 1
+
+
+def test_presence_elif():
+    assert presence_elif('') == 0
+    assert presence_elif('Abielif') == 0
+    assert presence_elif('elifitary?!') == 0
+    assert presence_elif('before the elif') == 1
+    assert presence_elif('\n  elif "open"') == 1
+    assert presence_elif('\nelif tippy\n') == 1
 
 
 def test_presence_dot_times():
@@ -391,28 +440,80 @@ def test_presence_def_colon():
     assert presence_def_colon("\n    def func:\n") == 1
 
 
+def test_presence_let():
+    assert presence_let('') == 0
+    assert presence_let('Abilet') == 0
+    assert presence_let('letitary?!') == 0
+    assert presence_let('\n  let | ret == 0') == 1
+    assert presence_let('\nlet ret') == 1
 
 
+def test_presence_snake_case():
+    assert presence_snake_case('') == 0
+    assert presence_snake_case('Abilet') == 0
+    assert presence_snake_case('letitary_') == 0
+    assert presence_snake_case('\n  let_ret == 0') == 1
+    assert presence_snake_case('\nlet_snake_case.values()') == 1
 
 
+def test_presence_naked_colon():
+    assert presence_naked_colon('') == 0
+    assert presence_naked_colon('Abil:et') == 0
+    assert presence_naked_colon('leti::tary?!') == 0
+    assert presence_naked_colon('\n  let : ret == 0') == 1
+    assert presence_naked_colon('let : ret\n') == 1
 
 
+def test_presence_naked_lt_minus():
+    assert presence_naked_lt_minus('') == 0
+    assert presence_naked_lt_minus('Abil<-et') == 0
+    assert presence_naked_lt_minus('leti<t-ary?!') == 0
+    assert presence_naked_lt_minus('\n  let <- ret == 0') == 1
+    assert presence_naked_lt_minus('let <- ret\n') == 1
 
 
+def test_percent_dollar_lower():
+    assert percent_dollar_lower('') == 0
+    assert percent_dollar_lower('Abi$let') == 0
+    assert percent_dollar_lower('letitary$') == 0
+    assert percent_dollar_lower('\n  $let \n $ret \n== 0') == 50
+    assert percent_dollar_lower('\n$let $ret') == 100
 
 
+def test_presence_minus_gt():
+    assert presence_minus_gt('') == 0
+    assert presence_minus_gt('Abil-e>t') == 0
+    assert presence_minus_gt('letit->ary?!') == 1
+    assert presence_minus_gt('\n  let-> ret == 0') == 1
+    assert presence_minus_gt('let-> ret\n') == 1
 
 
+def test_presence_function_php():
+    assert presence_function_php('') == 0
+    assert presence_function_php('Abifunction') == 0
+    assert presence_function_php('functionitary?!') == 0
+    assert presence_function_php('function ret {') == 0
+    assert presence_function_php('\n  function jsCase(s) {') == 0
+    assert presence_function_php('function PHPCaseMan(s) {') == 1
+    assert presence_function_php('\n  function PHPCaseMan(s) {\n') == 1
 
 
+def test_presence_elseif():
+    assert presence_elseif('') == 0
+    assert presence_elseif('Abielseif') == 0
+    assert presence_elseif('elseifitary?!') == 0
+    assert presence_elseif('before the elseif') == 1
+    assert presence_elseif('\n  elseif "open"') == 1
+    assert presence_elseif('\nelseif tippy\n') == 1
 
 
-
-
-
-
-
-
+def test_presence_proc():
+    assert presence_proc('') == 0
+    assert presence_proc('Abiproc') == 0
+    assert presence_proc('procitary?!') == 0
+    assert presence_proc('before the proc') == 0
+    assert presence_proc('   proc open') == 10
+    assert presence_proc('\nproc tippy\n') == 10
 
 
 
