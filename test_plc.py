@@ -516,11 +516,13 @@ def test_presence_proc():
     assert presence_proc('\nproc tippy\n') == 10
 
 
-
-
-
-
-
+def test_percent_curly_braces():
+    assert percent_curly_braces('') == 0
+    assert percent_curly_braces('{Abinull') == 1
+    assert percent_curly_braces('nu}llitary?!)') == 1
+    assert percent_curly_braces('{nullit}ary?!') == 2
+    assert percent_curly_braces('{ ret == null \n ret == 0}') == 1
+    assert percent_curly_braces('\n{#if null}\nhi\nhi') == 0.5
 
 
 #

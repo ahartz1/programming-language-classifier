@@ -516,4 +516,12 @@ def presence_proc(text):
     return 0
 
 
+def percent_curly_braces(text):
+    total_length = re.findall(r'($|\n)', text)
+    result = re.findall(r'([\{\}])', text)
+    if result:
+        return len(result) / len(total_length)
+    return 0
+
+
 #
