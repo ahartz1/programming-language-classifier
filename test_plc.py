@@ -307,6 +307,15 @@ def test_presence_puts():
     assert presence_puts('\nputs tippy\n') == 1
 
 
+def test_presence_puts_not_proc():
+    assert presence_puts_not_proc('') == 0
+    assert presence_puts_not_proc('Abiputs') == 0
+    assert presence_puts_not_proc('proc eat \nputs itary?!') == 0
+    assert presence_puts_not_proc('before the puts') == 1
+    assert presence_puts_not_proc('\n  puts "open"') == 1
+    assert presence_puts_not_proc('\nputs tippy\n') == 1
+
+
 def test_presence_elif():
     assert presence_elif('') == 0
     assert presence_elif('Abielif') == 0
@@ -480,12 +489,12 @@ def test_percent_dollar_lower():
     assert percent_dollar_lower('\n$let $ret') == 100
 
 
-def test_presence_minus_gt():
-    assert presence_minus_gt('') == 0
-    assert presence_minus_gt('Abil-e>t') == 0
-    assert presence_minus_gt('letit->ary?!') == 1
-    assert presence_minus_gt('\n  let-> ret == 0') == 1
-    assert presence_minus_gt('let-> ret\n') == 1
+def test_presence_dollar_minus_gt():
+    assert presence_dollar_minus_gt('') == 0
+    assert presence_dollar_minus_gt('$bil-e>t') == 0
+    assert presence_dollar_minus_gt('$letit->ary?!') == 1
+    assert presence_dollar_minus_gt('\n  $let-> ret == 0') == 1
+    assert presence_dollar_minus_gt('$let-> ret\n') == 1
 
 
 def test_presence_function_php():
@@ -496,6 +505,14 @@ def test_presence_function_php():
     assert presence_function_php('\n  function jsCase(s) {') == 0
     assert presence_function_php('function PHPCaseMan(s) {') == 1
     assert presence_function_php('\n  function PHPCaseMan(s) {\n') == 1
+
+
+def test_presence_gt_question():
+    assert presence_gt_question('') == 0
+    assert presence_gt_question('<Abi?let') == 0
+    assert presence_gt_question('letitary<?!') == 0
+    assert presence_gt_question('\n<?  let-> ret == 0') == 1
+    assert presence_gt_question('<? let-> ret\n') == 1
 
 
 def test_presence_elseif():
@@ -518,8 +535,8 @@ def test_presence_proc():
 
 def test_percent_curly_braces():
     assert percent_curly_braces('') == 0
-    assert percent_curly_braces('{Abinull') == 1
     assert percent_curly_braces('nu}llitary?!)') == 1
+    assert percent_curly_braces('{Abinull') == 1
     assert percent_curly_braces('{nullit}ary?!') == 2
     assert percent_curly_braces('{ ret == null \n ret == 0}') == 1
     assert percent_curly_braces('\n{#if null}\nhi\nhi') == 0.5

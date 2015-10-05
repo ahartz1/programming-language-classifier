@@ -331,6 +331,14 @@ def presence_puts(text):
     return 0
 
 
+def presence_puts_not_proc(text):
+    result_puts = re.findall(r'\bputs\b', text)
+    result_proc = re.findall(r'\bproc\b', text)
+    if result_puts and not result_proc:
+        return 1
+    return 0
+
+
 def presence_elif(text):
     result = re.findall(r'\belif\b', text)
     if result:
@@ -486,8 +494,8 @@ def percent_dollar_lower(text):
     return 0
 
 
-def presence_minus_gt(text):
-    result = re.findall(r'\w->[ \w]', text)
+def presence_dollar_minus_gt(text):
+    result = re.findall(r'\$\w+->\s*[\w]', text)
     if result:
         return 1
     return 0
@@ -496,6 +504,13 @@ def presence_minus_gt(text):
 def presence_function_php(text):
     result = re.findall(r'((?:^|\n)\s*function '
                         r'(?:[A-Z][a-z]*)*\s*\(\s*.*\)\s*\{)', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_gt_question(text):
+    result = re.findall(r'(?:^|\n)\s*(<\?)[^\w]', text)
     if result:
         return 1
     return 0
@@ -519,6 +534,7 @@ def presence_proc(text):
 def percent_curly_braces(text):
     total_length = re.findall(r'($|\n)', text)
     result = re.findall(r'([\{\}])', text)
+    # result = re.findall(r'(?:^|\n)[^\(\)]*([\{\}][^\(\)]*)+(?:$|\n)', text)
     if result:
         return len(result) / len(total_length)
     return 0
