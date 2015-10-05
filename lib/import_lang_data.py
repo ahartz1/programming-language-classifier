@@ -43,6 +43,7 @@ def match_extensions(df):
     df[0] = df[0].str.replace(r'^scala$', 'Scala')
     df[0] = df[0].str.replace(r'^racket$', 'Scheme')
     df[0] = df[0].str.replace(r'^scheme$', 'Scheme')
+    df[0] = df[0].str.replace(r'^tcl$', 'TCL')
     return df
 
 
