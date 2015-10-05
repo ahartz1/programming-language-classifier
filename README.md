@@ -75,7 +75,7 @@ Your initial classifier should be able to take a string containing code and retu
 
 The `test/` directory contains code snippets. The file `test.csv` contains a list of the file names in the `test` directory and the language of each snippet. Use this set of snippets to test your classifier. _Do not use the test snippets for training your classifier._
 
-## Hard Mode
+<!-- ## Hard Mode
 
 In addition to the requirements from **Normal Mode**:
 
@@ -87,9 +87,9 @@ where `guess_lang.py` is whatever you name your program and `code-snippet.txt` i
 
 To do this, you will likely want to either pre-parse your corpus and output it as features to load or save out your classifier for later use. Otherwise, you'll have to read your entire corpus every time you run the program. That's acceptable, but slow.
 
-You may want to add some command-line flags to your program. You could allow people to choose the corpus, for example, or to get percentage chances instead of one language. To understand how to write a command-line program with arguments and flags, see the [argparse](https://docs.python.org/3/library/argparse.html) module in the standard library.
+You may want to add some command-line flags to your program. You could allow people to choose the corpus, for example, or to get percentage chances instead of one language. To understand how to write a command-line program with arguments and flags, see the [argparse](https://docs.python.org/3/library/argparse.html) module in the standard library. -->
 
-<!-- #### System Requirements
+#### System Requirements
 
 * You will need to have **Python&nbsp;3** installed on your machine or have access to a Python&nbsp;3 interpreter. See [python's site](https://www.python.org/) for details.
 
@@ -111,7 +111,7 @@ $ python3
 
 This will open up a new window on which you will need to select to download all. This process can take awhile, so please be patient. When it is done and you have closed the download window the command line will show `True`. Enter `exit()` on the Python command line to return to the command prompt.
 
-* To run this program, save `guess_lang.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 guess_lang.py` -->
+* To run this program, save `guess_lang.py` to your computer. Using a command-line program (such as Terminal on Mac&nbsp;OS&nbsp;X), navigate to the folder containing the downloaded file and run the following line to play: `python3 guess_lang.py`
 
 
 ## Additional Resources
