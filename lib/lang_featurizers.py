@@ -133,11 +133,65 @@ def longest_run_of_parenthesis(text):
     return 0
 
 
-# Specific to JavaScript? TODO: Refine
+# Specific to JavaScript?
 def longest_run_of_curly_braces(text):
     result = re.findall(r'(\}{2,})(?:$|\n)', text)
     if result:
         return len(sorted(result, key=len, reverse=True)[0])
+    return 0
+
+
+# Specific to JavaScript
+def single_closing_braces_per_line(text):
+    total_length = re.findall(r'($|\n)', text)
+    result = re.findall(r'\n\s*(\})', text)
+    if result:
+        return len(result) / len(total_length)
+    return 0
+
+
+def presence_function_js(text):
+    result = re.findall(r'((?:^|\n)\s*function (?:[a-z]+){1}'
+                        r'(?:[A-Z][a-z]*)*\s*\(\s*.*\)\s*\{)', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_while(text):
+    result = re.findall(r'\bwhile\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_do(text):
+    result = re.findall(r'\bdo\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_var(text):
+    result = re.findall(r'\bvar\b', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_for_js(text):
+    result = re.findall(r'((?:^|\n)\s*for\s*\(\s*.*\)\s*\{)', text)
+    if result:
+        return 1
+    return 0
+
+
+# NOT USED DUE TO LOWERED SCORES!
+def final_semicolons_per_line(text):
+    total_length = re.findall(r'($|\n)', text)
+    result = re.findall(r'(;(?:$|\n))', text)
+    if result:
+        return len(result) / len(total_length)
     return 0
 
 
@@ -246,6 +300,13 @@ def presence_dot_times(text):
 # Specific to Clojure
 def presence_paren_defn(text):
     result = re.findall(r'(?:^|\n)\s*\(defn ', text)
+    if result:
+        return 1
+    return 0
+
+
+def presence_paren_ns(text):
+    result = re.findall(r'(?:^|\n)\s*\(ns ', text)
     if result:
         return 1
     return 0

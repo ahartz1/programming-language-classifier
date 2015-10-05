@@ -95,6 +95,68 @@ def test_longest_run_of_curly_braces():
     assert longest_run_of_curly_braces('{1{2}}\n{1{2{3}}}') == 3
 
 
+def test_single_closing_braces_per_line():
+    assert single_closing_braces_per_line('none') == 0
+    assert single_closing_braces_per_line('{none}') == 0
+    assert single_closing_braces_per_line('\nnone}\n') == 0
+    assert single_closing_braces_per_line('\n}') == 0.5
+    assert single_closing_braces_per_line('\n}\n}\n') == 0.5
+    assert single_closing_braces_per_line('\n   }\n}\nx') == 0.5
+
+
+def test_presence_function_js():
+    assert presence_function_js('') == 0
+    assert presence_function_js('Abifunction') == 0
+    assert presence_function_js('functionitary?!') == 0
+    assert presence_function_js('function ret {') == 0
+    assert presence_function_js('\n  function CamelCase(s) {') == 0
+    assert presence_function_js('function jsCaseMan(s) {') == 1
+    assert presence_function_js('\n  function jsCaseMan(s) {\n') == 1
+
+
+def test_presence_while():
+    assert presence_while('') == 0
+    assert presence_while('Abiwhile') == 0
+    assert presence_while('whileitary?!') == 0
+    assert presence_while('ret == while | ret == 0') == 1
+    assert presence_while('if ret == while') == 1
+
+
+def test_presence_do():
+    assert presence_do('') == 0
+    assert presence_do('Abido') == 0
+    assert presence_do('doitary?!') == 0
+    assert presence_do('ret == do | ret == 0') == 1
+    assert presence_do('if ret == do') == 1
+
+
+def test_presence_var():
+    assert presence_var('') == 0
+    assert presence_var('Abivar') == 0
+    assert presence_var('varitary?!') == 0
+    assert presence_var('ret == var | ret == 0') == 1
+    assert presence_var('if ret == var') == 1
+
+
+def test_presence_for_js():
+    assert presence_for_js('') == 0
+    assert presence_for_js('Abifor') == 0
+    assert presence_for_js('foritary?!') == 0
+    assert presence_for_js('for ret {') == 0
+    assert presence_for_js('\n  for CamelCase(s) {') == 0
+    assert presence_for_js('for (s) {') == 1
+    assert presence_for_js('\n  for (s < 1) {\n') == 1
+
+
+def test_final_semicolons_per_line():
+    assert final_semicolons_per_line('none') == 0
+    assert final_semicolons_per_line(';none') == 0
+    assert final_semicolons_per_line('\n;none}\n') == 0
+    assert final_semicolons_per_line('\n;') == 0.5
+    assert final_semicolons_per_line('\nee;\ns;\n') == 0.5
+    assert final_semicolons_per_line('\n   ;\nee;\nx') == 0.5
+
+
 def test_presence_void():
     assert presence_void('') == 0
     assert presence_void('Abivoid') == 0
@@ -221,6 +283,16 @@ def test_presence_paren_defn():
     assert presence_paren_defn('\ndefn no paren') == 0
     assert presence_paren_defn('\n  (defn no_colon\n') == 1
     assert presence_paren_defn('\n(defn i_work') == 1
+
+
+def test_presence_paren_ns():
+    assert presence_paren_ns('') == 0
+    assert presence_paren_ns('Abins') == 0
+    assert presence_paren_ns('nsnitary?!') == 0
+    assert presence_paren_ns('before the (ns') == 0
+    assert presence_paren_ns('\nns no paren') == 0
+    assert presence_paren_ns('\n  (ns no_colon\n') == 1
+    assert presence_paren_ns('\n(ns i_work') == 1
 
 
 def test_presence_taskloop():
